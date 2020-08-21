@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <title>Calculadora de interes compuesto</title>
+  </head>
+  <body>
+    <header>
+    	<nav class="navbar">
+    		<h1>Calculadora de interes compuesto</h1>
+    	</nav>
+    </header>
+
+    <section>
+    	<div class="container">
+    		<form class="form-group bg-light" id="calculadora">
+    			<div id="monto-principal">
+    				<label>Monto Principal</label><br>
+    				<input type="number" id="principal-valor" name="principal-valor">
+    			</div>
+    			<div id="tasa-interes">
+    				<label>Tasa de Interes</label><br>
+    				<input type="number" id="interes-valor" name="interes-valor">
+    			</div>
+    			<div id="compuest">
+    				<label>Compuesto</label><br>
+    				<input id="listaValores" list="compuesto-valor"  name="compuesto-valor">
+    				<datalist id="compuesto-valor">
+    					<option id="diario" label="Diario(365/Año)" value="365">
+    					<option id="semanal" label="Semanal(52/Año)" value="52">
+    					<option id="semi-mensual" label="Semi mensual(24/Año)" value="24">
+    					<option id="mensual" label="Mensual(12/Año)" value="12">
+    					<option id="mensual" label="Semi anual(2/Año)" value="2">
+    					<option id="anual" label="Anual(1/Año)" value="1">
+    				</datalist>
+    			</div>
+    			<div id="periodo">
+    				<label>Años</label><br>
+    				<input type="number" id="periodo-valor" name="periodo-valor"><br>
+    			</div>
+    			<div>
+    				<br><button type="submit" class="btn btn-primary mb-2 calcular" form="calculadora">Calcular</button>
+    			</div>
+    		</form>
+    	</div>
+    	
+    	<div class="container">
+    		<br><form class="form-group bg-light">
+    			<div id="resultados">
+    				<label>
+    					<p id="valor-futuro">0</p>
+    				</label>
+    			</div>
+    		</form>
+    	</div>
+    		
+    	</div>
+    </section>
+
+
+    
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Optional JavaScript -->
+    <script src="js/script.js"></script>
+  </body>
+</html>

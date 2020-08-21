@@ -1,0 +1,20 @@
+/**HEADER**/
+
+
+/**END HEADER**/
+
+
+/**BODY**/
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+
+.form-group{
+	margin: 0 auto;
+	width: 60%;
+	text-align: center;
+}
+
+
+/**END BODY**/
