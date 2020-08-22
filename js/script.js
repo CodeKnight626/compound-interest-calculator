@@ -14,21 +14,62 @@ $(document).ready(function() {
 	var presentValue = 0;
 	var interestRate = 0;
 	var compundingPeriods = 0;
-	var years = 0
+	var years = 0;
 
-	var interestValue = 0
-	var interestPercentage = 0
-	var presentValuePercentage = 0
+	var interestValue = 0;
+	var interestPercentage = 0;
+	var presentValuePercentage = 0;
 
 	//Lists Used to storage data to graphic later
-	let stackedChartsYears = []
-	let stackedCharts = []
-	let colorPresentAmount = []
-	let colorInterest = []
-	let presentValuedata = []
-	let interesPerYear = []
+	let stackedChartsYears = [];
+	let stackedCharts = [];
+	let colorPresentAmount = [];
+	let colorInterest = [];
+	let presentValuedata = [];
+	let interesPerYear = [];
+	var destroyCharts = false;
 
+	// Generamos la grafica de pie
+	var ctxP = document.getElementById('myPieChart').getContext('2d');
+	var myPieChart = new Chart(ctxP, {
+    	type: 'pie',
+    	data: {labels: [],
+            datasets: [{
+                label: '',
+                backgroundColor:[ blue, gray],
+                borderColor: 'rgb(57, 119, 153)',
+                data: []
+        }]},
+    	options: {}
+	});
 
+	// Generamos la grafica de barras
+	var ctxB = document.getElementById('myBarChart').getContext('2d');
+	var myBarChart = new Chart(ctxB, {
+    	type: 'bar',
+    	data: {
+    		labels: [],
+            datasets: [{
+                label: 'Monto principal',
+                backgroundColor: [],
+                data: []
+            	},
+            	{
+                label: 'Intereses',
+                backgroundColor: [],
+                data: []
+            	}
+            ]
+        },
+    	options: {
+    		scales: {
+    			xAxes: [{ stacked: true }],
+    			yAxes: [{ stacked: true }]
+  			}
+    	}
+	});
+
+	//var destroyCharts = false
 	// Funcion llamada al presionar el boton submit de la forma, Inicia los calculos
 	$("#calculadora").submit(function(e) {
 
@@ -56,6 +97,12 @@ $(document).ready(function() {
 			futureValue = presentValue * (Math.pow(interestRate,i));
 			interesPerYear[i - +1] = parseFloat(+futureValue - +presentValue).toFixed(2);
 		}
+
+		//Ciclo for para eliminar datos restantes de calculos pasados
+		iterator = stackedChartsYears.length
+		for(i=+years + +1;i<=iterator;i++){
+			stackedChartsYears.pop()
+		}
 		
 		// Hacemos los calculos de acuerdo a la formula y guardamos el valor total al final del periodo de años
 		futureValue = presentValue * (Math.pow(interestRate,years))
@@ -64,52 +111,27 @@ $(document).ready(function() {
 		interestValue = +futureValue - +presentValue;
 		interestPercentage = (+interestValue * 100) / futureValue;
 		presentValuePercentage = (+presentValue * 100) / futureValue;
-
 		
 
 		// Cambiamos el valor de la etiqueta y mostramos el monto total
 		document.getElementById("valor-futuro").innerHTML = parseFloat(futureValue).toFixed(2);
+
+		myPieChart.data.labels = [('Monto Principal: ' + parseFloat(presentValuePercentage).toFixed(2)), ('Monto Intereses: ' + parseFloat(interestPercentage).toFixed(2))]
+		myPieChart.data.datasets[0].data = [parseFloat(presentValuePercentage).toFixed(2), parseFloat(interestPercentage).toFixed(2)]
+		myPieChart.update()
+
+
+		myBarChart.data.labels = stackedChartsYears
+		myBarChart.data.datasets[0].backgroundColor = colorPresentAmount
+		myBarChart.data.datasets[0].data = presentValuedata
+
+		myBarChart.data.datasets[1].backgroundColor = colorInterest
+		myBarChart.data.datasets[1].data = interesPerYear
+
+		myBarChart.update()
 		
-		// Generamos la grafica de pie
-		var ctxP = document.getElementById('myPieChart').getContext('2d');
-		var myPieChart = new Chart(ctxP, {
-    		type: 'pie',
-    		data: {labels: [('Monto Principal: ' + parseFloat(presentValuePercentage).toFixed(2)), ('Monto Intereses: ' + parseFloat(interestPercentage).toFixed(2))],
-            	datasets: [{
-                	label: '',
-                	backgroundColor:[ blue, gray],
-                	borderColor: 'rgb(57, 119, 153)',
-                	data: [parseFloat(presentValuePercentage).toFixed(2), parseFloat(interestPercentage).toFixed(2)]
-            }]},
-    		options: {}
-		});
 
-		// Generamos la grafica de barras
-		var ctxB = document.getElementById('myBarChart').getContext('2d');
-		var myBarChart = new Chart(ctxB, {
-    		type: 'bar',
-    		data: {
-    			labels: stackedChartsYears,
-            	datasets: [{
-                	label: 'Monto principal',
-                	backgroundColor: colorPresentAmount,
-                	data: presentValuedata
-            		},
-            		{
-                	label: 'Intereses',
-                	backgroundColor:colorInterest,
-                	data: interesPerYear
-            		}
-            	]
-        	},
-    		options: {
-    			scales: {
-    				xAxes: [{ stacked: true }],
-    				yAxes: [{ stacked: true }]
-  				}
-    		}
-		});
-
+	
 
 		e.preventDefault();
 	});
