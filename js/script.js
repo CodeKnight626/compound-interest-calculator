@@ -5,6 +5,7 @@
 // DOM manipulation
 $(document).ready(function() {
 
+
 	// Variables para colores
 	var gray = 'rgb(134, 141, 145)'
 	var blue = 'rgb(3, 165, 252)'
@@ -27,7 +28,6 @@ $(document).ready(function() {
 	let colorInterest = [];
 	let presentValuedata = [];
 	let interesPerYear = [];
-	var destroyCharts = false;
 
 	// Generamos la grafica de pie
 	var ctxP = document.getElementById('myPieChart').getContext('2d');
@@ -50,12 +50,12 @@ $(document).ready(function() {
     	data: {
     		labels: [],
             datasets: [{
-                label: 'Monto principal',
+                label: '',
                 backgroundColor: [],
                 data: []
             	},
             	{
-                label: 'Intereses',
+                label: '',
                 backgroundColor: [],
                 data: []
             	}
@@ -69,9 +69,9 @@ $(document).ready(function() {
     	}
 	});
 
-	//var destroyCharts = false
 	// Funcion llamada al presionar el boton submit de la forma, Inicia los calculos
 	$("#calculadora").submit(function(e) {
+		document.getElementById("charts").style.visibility = "visible";
 
 		// Tomamos el valor de los campos correspondientes y lo asignamos a las variables
 		presentValue = document.getElementById("principal-valor").value;
@@ -120,18 +120,16 @@ $(document).ready(function() {
 		myPieChart.data.datasets[0].data = [parseFloat(presentValuePercentage).toFixed(2), parseFloat(interestPercentage).toFixed(2)]
 		myPieChart.update()
 
-
+		myBarChart.clear()
 		myBarChart.data.labels = stackedChartsYears
+		myBarChart.data.datasets[0].label = 'Monto principal'
 		myBarChart.data.datasets[0].backgroundColor = colorPresentAmount
 		myBarChart.data.datasets[0].data = presentValuedata
 
+		myBarChart.data.datasets[1].label = 'Intereses'
 		myBarChart.data.datasets[1].backgroundColor = colorInterest
 		myBarChart.data.datasets[1].data = interesPerYear
-
 		myBarChart.update()
-		
-
-	
 
 		e.preventDefault();
 	});
